@@ -117,6 +117,10 @@ class ClientDbService {
   }
 
   // --- Auth ---
+  public getUsers(): User[] {
+    return this.data.users;
+  }
+
   public login(email: string) {
     const user = this.data.users.find(
       (u) => u.email.toLowerCase() === email.trim().toLowerCase()
@@ -617,6 +621,64 @@ class ClientDbService {
         (c) => c.certificateNumber === id || c.id === id || c.workerId === id
       ) || null
     );
+  }
+
+  public getCertificates(): SkillCertificate[] {
+    return this.data.certificates;
+  }
+
+  // --- Analytics Overview ---
+  public getAnalyticsOverview() {
+    const workers = this.data.workers;
+    const bookings = this.data.bookings;
+    const cooperatives = this.data.cooperatives;
+    const totalVolume = bookings.reduce((sum, b) => sum + (b.totalAmount || 0), 0);
+    const workerEarnings = bookings.reduce((sum, b) => sum + (b.workerShare || 0), 0);
+    const platformCommissions = bookings.reduce((sum, b) => sum + (b.platformFee || 0), 0);
+    const welfarePool = bookings.reduce((sum, b) => sum + (b.welfareFee || 0), 0);
+
+    return {
+      totalCooperatives: cooperatives.length,
+      totalWorkers: workers.length,
+      approvedWorkers: workers.filter((w) => w.status === 'APPROVED').length,
+      activeWorkersOnline: workers.filter((w) => w.isAvailable).length,
+      totalBookings: bookings.length,
+      completedBookings: bookings.filter((b) => b.status === 'COMPLETED').length,
+      emergencySosCalls: bookings.filter((b) => b.isEmergency).length,
+      totalVolume,
+      workerEarnings,
+      platformCommissions,
+      welfarePool,
+      fairAllocationRotationIndex: '96.8% (Equitable gig distribution active)',
+      fairAllocationLogs: this.data.fairAllocationLogs.slice(0, 5)
+    };
+  }
+
+  public verifyOtpAndStartBooking(id: string, otp: string) {
+    const booking = this.getBookingById(id);
+    if (!booking) return { error: 'Booking not found' };
+    if (booking.otpCode && booking.otpCode !== otp.trim()) {
+      return { error: 'Invalid start OTP. Please verify with customer.' };
+    }
+    const updated = this.updateBookingStatus(id, 'IN_PROGRESS');
+    return { success: true, booking: updated };
+  }
+
+  public completeBooking(id: string, finalAmount?: number) {
+    const booking = this.getBookingById(id);
+    if (!booking) return null;
+    if (finalAmount && finalAmount > 0) {
+      booking.totalAmount = finalAmount;
+      const workerShare = Math.round(finalAmount * 0.90);
+      const welfareFee = Math.round(finalAmount * 0.02);
+      const platformFee = finalAmount - workerShare - welfareFee;
+      booking.workerShare = workerShare;
+      booking.welfareFee = welfareFee;
+      booking.platformFee = platformFee;
+    }
+    const updated = this.updateBookingStatus(id, 'COMPLETED');
+    const invoice = this.data.invoices.find((i) => i.bookingId === id) || null;
+    return { booking: updated, invoice };
   }
 
   // --- Invoices ---

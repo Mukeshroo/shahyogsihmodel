@@ -38,9 +38,10 @@ self.addEventListener('fetch', (event) => {
       if (cachedResponse) {
         return cachedResponse;
       }
-      return fetch(event.request).catch(() => {
+      return fetch(event.request).catch(async () => {
         if (event.request.mode === 'navigate') {
-          return caches.match('/index.html');
+          const fallback = (await caches.match('./index.html')) || (await caches.match('./')) || (await caches.match('/index.html'));
+          if (fallback) return fallback;
         }
       });
     })

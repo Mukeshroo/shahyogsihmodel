@@ -417,6 +417,35 @@
   ],
   "bookings": [
     {
+      "id": "test-bk-1790785589555",
+      "bookingCode": "SHY-TEST-01",
+      "customerId": "user-cust-1",
+      "customerName": "Priya Sharma",
+      "customerPhone": "+91 98390 12345",
+      "address": "Flat 402, Kalyanpur, Kanpur",
+      "area": "Kalyanpur",
+      "lat": 26.496,
+      "lng": 80.26,
+      "serviceCategoryId": "cat-electrician",
+      "serviceName": "Electrician Services",
+      "description": "Test MCB issue",
+      "scheduledTime": "Immediate",
+      "isEmergency": false,
+      "status": "ASSIGNED",
+      "assignedWorkerId": "work-1",
+      "workerName": "Ramesh Verma",
+      "workerPhone": "+91 98391 23456",
+      "workerAvatar": null,
+      "otpCode": "5566",
+      "totalAmount": 1000,
+      "workerShare": 900,
+      "platformFee": 100,
+      "welfareFee": 20,
+      "paymentMethod": "UPI",
+      "paymentStatus": "PENDING",
+      "createdAt": "2026-09-30T16:26:29.555Z"
+    },
+    {
       "id": "test-bk-1790785204957",
       "bookingCode": "SHY-TEST-01",
       "customerId": "user-cust-1",
@@ -871,6 +900,72 @@
     }
   ],
   "auditLogs": [
+    {
+      "id": "aud-1790785417109-709",
+      "timestamp": "2026-09-30T16:23:37.109Z",
+      "userId": "user-work-1",
+      "userName": "Ramesh Verma",
+      "role": "worker",
+      "action": "USER_LOGIN",
+      "entityType": "User",
+      "entityId": "user-work-1",
+      "details": "User logged in successfully as worker"
+    },
+    {
+      "id": "aud-1790785384431-714",
+      "timestamp": "2026-09-30T16:23:04.431Z",
+      "userId": "user-cust-1",
+      "userName": "Priya Sharma",
+      "role": "customer",
+      "action": "USER_LOGIN",
+      "entityType": "User",
+      "entityId": "user-cust-1",
+      "details": "User logged in successfully as customer"
+    },
+    {
+      "id": "aud-1790785383354-570",
+      "timestamp": "2026-09-30T16:23:03.354Z",
+      "userId": "user-work-1",
+      "userName": "Ramesh Verma",
+      "role": "worker",
+      "action": "USER_LOGIN",
+      "entityType": "User",
+      "entityId": "user-work-1",
+      "details": "User logged in successfully as worker"
+    },
+    {
+      "id": "aud-1790785382023-10",
+      "timestamp": "2026-09-30T16:23:02.023Z",
+      "userId": "user-sec-1",
+      "userName": "Alok Nath Mishra",
+      "role": "secretary",
+      "action": "USER_LOGIN",
+      "entityType": "User",
+      "entityId": "user-sec-1",
+      "details": "User logged in successfully as secretary"
+    },
+    {
+      "id": "aud-1790785377912-981",
+      "timestamp": "2026-09-30T16:22:57.912Z",
+      "userId": "user-fed-1",
+      "userName": "Dr. Archana Bajpai",
+      "role": "federation",
+      "action": "USER_LOGIN",
+      "entityType": "User",
+      "entityId": "user-fed-1",
+      "details": "User logged in successfully as federation"
+    },
+    {
+      "id": "aud-1790785235611-765",
+      "timestamp": "2026-09-30T16:20:35.611Z",
+      "userId": "user-admin-1",
+      "userName": "Vikramaditya Rao (Super Admin)",
+      "role": "admin",
+      "action": "USER_LOGIN",
+      "entityType": "User",
+      "entityId": "user-admin-1",
+      "details": "User logged in successfully as admin"
+    },
     {
       "id": "aud-1790784861979-226",
       "timestamp": "2026-09-30T16:14:21.979Z",

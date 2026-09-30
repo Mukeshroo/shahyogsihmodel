@@ -69,13 +69,16 @@ const AppContent: React.FC = () => {
       .catch(console.error);
   }, []);
 
-  // Check URL pathname for /verify/:id
+  // Check URL pathname for /verify/:id (supporting GitHub Pages subpaths)
   useEffect(() => {
     const path = window.location.pathname;
-    if (path.startsWith('/verify/')) {
-      const id = path.replace('/verify/', '');
-      setUrlCertId(id);
-      setCurrentView('verify');
+    const verifyIdx = path.indexOf('/verify/');
+    if (verifyIdx !== -1) {
+      const id = path.slice(verifyIdx + 8).split('/')[0].split('?')[0];
+      if (id) {
+        setUrlCertId(id);
+        setCurrentView('verify');
+      }
     }
   }, []);
 
