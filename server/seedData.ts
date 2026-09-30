@@ -1,0 +1,787 @@
+import {
+  User,
+  Cooperative,
+  ServiceCategory,
+  Worker,
+  SkillCertificate,
+  Booking,
+  PaymentTransaction,
+  Invoice,
+  WorkerWelfare,
+  DemandForecast,
+  Complaint,
+  AuditLog,
+  SystemSettings,
+  AppNotification
+} from '../src/types/index.ts';
+
+export const initialUsers: User[] = [
+  {
+    id: 'user-cust-1',
+    email: 'priya.sharma@example.com',
+    phone: '+91 98390 12345',
+    name: 'Priya Sharma',
+    role: 'customer',
+    avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80',
+    address: 'Flat 402, Ganga Heights, Kalyanpur, Kanpur',
+    district: 'Kanpur Nagar',
+    language: 'hi',
+    createdAt: '2026-01-10T10:00:00Z'
+  },
+  {
+    id: 'user-work-1',
+    email: 'ramesh.verma@example.com',
+    phone: '+91 98391 23456',
+    name: 'Ramesh Verma',
+    role: 'worker',
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
+    address: 'G-14, Sharda Nagar, Kanpur',
+    district: 'Kanpur Nagar',
+    language: 'hi',
+    createdAt: '2026-01-15T09:30:00Z'
+  },
+  {
+    id: 'user-work-2',
+    email: 'sunita.devi@example.com',
+    phone: '+91 98392 34567',
+    name: 'Sunita Devi',
+    role: 'worker',
+    avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80',
+    address: 'Near Rama Dental College, Kalyanpur, Kanpur',
+    district: 'Kanpur Nagar',
+    language: 'hi',
+    createdAt: '2026-02-01T11:00:00Z'
+  },
+  {
+    id: 'user-work-3',
+    email: 'manoj.kumar@example.com',
+    phone: '+91 98393 45678',
+    name: 'Manoj Kumar',
+    role: 'worker',
+    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80',
+    address: '112/45, Swaroop Nagar, Kanpur',
+    district: 'Kanpur Nagar',
+    language: 'en',
+    createdAt: '2026-02-10T14:20:00Z'
+  },
+  {
+    id: 'user-sec-1',
+    email: 'secretary.kalyanpur@sahyog.coop',
+    phone: '+91 98394 56789',
+    name: 'Alok Nath Mishra',
+    role: 'secretary',
+    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&auto=format&fit=crop&q=80',
+    address: 'Cooperative Bhawan, Kalyanpur Main Road, Kanpur',
+    district: 'Kanpur Nagar',
+    language: 'hi',
+    createdAt: '2025-12-01T08:00:00Z'
+  },
+  {
+    id: 'user-fed-1',
+    email: 'director.upfed@sahyog.gov.in',
+    phone: '+91 98395 67890',
+    name: 'Dr. Archana Bajpai',
+    role: 'federation',
+    avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&auto=format&fit=crop&q=80',
+    address: 'UP Gig Workers Federation HQ, Mall Road, Kanpur',
+    district: 'Kanpur Nagar',
+    language: 'en',
+    createdAt: '2025-11-15T10:00:00Z'
+  },
+  {
+    id: 'user-admin-1',
+    email: 'admin@sahyog.coop',
+    phone: '+91 98396 78901',
+    name: 'Vikramaditya Rao (Super Admin)',
+    role: 'admin',
+    avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&auto=format&fit=crop&q=80',
+    address: 'Tech Innovation Hub, IIT Kanpur Campus',
+    district: 'Kanpur Nagar',
+    language: 'en',
+    createdAt: '2025-10-01T00:00:00Z'
+  }
+];
+
+export const initialCooperatives: Cooperative[] = [
+  {
+    id: 'coop-knp-1',
+    name: 'Kalyanpur Shramik Sahyog Samiti Ltd.',
+    registrationNumber: 'COOP/UP/KNP/2024/0981',
+    district: 'Kanpur Nagar',
+    address: 'Shop 12-14, Sahyog Parisar, Kalyanpur, Kanpur 208017',
+    secretaryId: 'user-sec-1',
+    secretaryName: 'Alok Nath Mishra',
+    memberCount: 148,
+    commissionRate: 10,
+    welfareRate: 2,
+    phone: '+91 512 2589012'
+  },
+  {
+    id: 'coop-knp-2',
+    name: 'Swaroop Nagar & Civil Lines Karigar Society',
+    registrationNumber: 'COOP/UP/KNP/2024/1104',
+    district: 'Kanpur Nagar',
+    address: 'Near Phool Bagh, Civil Lines, Kanpur 208001',
+    secretaryId: 'user-sec-2',
+    secretaryName: 'Rajesh Saxena',
+    memberCount: 94,
+    commissionRate: 10,
+    welfareRate: 2,
+    phone: '+91 512 2314589'
+  },
+  {
+    id: 'coop-knp-3',
+    name: 'Kidwai Nagar & Barra Mahila & Shram Sahyog',
+    registrationNumber: 'COOP/UP/KNP/2025/0419',
+    district: 'Kanpur Nagar',
+    address: 'Near Deep Cinema Chauraha, Kidwai Nagar, Kanpur 208011',
+    secretaryId: 'user-sec-3',
+    secretaryName: 'Kusum Lata Sahu',
+    memberCount: 112,
+    commissionRate: 10,
+    welfareRate: 2,
+    phone: '+91 512 2645123'
+  }
+];
+
+export const initialCategories: ServiceCategory[] = [
+  {
+    id: 'cat-electrician',
+    name: 'Electrician Services',
+    nameHi: 'बिजली मिस्त्री (इलेक्ट्रीशियन)',
+    icon: 'Zap',
+    description: 'Wiring, MCB repair, switchboard repair, appliance installation, earthing.',
+    descriptionHi: 'वायरिंग, एमसीबी, स्विचबोर्ड, पंखा-लाइट और अर्थिंग का काम।',
+    basePrice: 299,
+    turnaroundTime: '30-45 mins',
+    unit: 'per visit / diagnosis'
+  },
+  {
+    id: 'cat-plumber',
+    name: 'Plumbing & Pipe Repair',
+    nameHi: 'प्लंबर व नल मरम्मत',
+    icon: 'Wrench',
+    description: 'Leakage fixing, tap replacement, bathroom fitting, water tank cleaning.',
+    descriptionHi: 'लीकेज ठीक करना, नल बदलना, पाइप फिटिंग व पानी टंकी सफाई।',
+    basePrice: 249,
+    turnaroundTime: '30-45 mins',
+    unit: 'per visit / diagnosis'
+  },
+  {
+    id: 'cat-appliance',
+    name: 'Home Appliance Repair',
+    nameHi: 'घरेलू उपकरण मरम्मत',
+    icon: 'Cpu',
+    description: 'RO service, Washing Machine, Geyser, Inverter, Microwave, Refrigerator.',
+    descriptionHi: 'आर.ओ., वाशिंग मशीन, गीजर, इन्वर्टर, फ्रिज और माइक्रोवेव रिपेयर।',
+    basePrice: 349,
+    turnaroundTime: '45-60 mins',
+    unit: 'per service call'
+  },
+  {
+    id: 'cat-carpenter',
+    name: 'Carpentry & Woodwork',
+    nameHi: 'बढ़ई व लकड़ी का काम',
+    icon: 'Hammer',
+    description: 'Door lock, hinge repair, furniture repair, sliding channels, modular fittings.',
+    descriptionHi: 'दरवाजे का ताला, कब्जा, सोफा-मेज मरम्मत व नया काम।',
+    basePrice: 299,
+    turnaroundTime: '45-60 mins',
+    unit: 'per service call'
+  },
+  {
+    id: 'cat-cleaner',
+    name: 'Deep Cleaning & Sanitization',
+    nameHi: 'घर की गहरी सफाई',
+    icon: 'Sparkles',
+    description: 'Full house deep cleaning, kitchen degreasing, bathroom descaling, sofa cleaning.',
+    descriptionHi: 'पूरे घर, किचन, बाथरूम और सोफे की गहरी सफाई व सैनिटाइजेशन।',
+    basePrice: 699,
+    turnaroundTime: '2-3 hours',
+    unit: 'per session'
+  },
+  {
+    id: 'cat-painter',
+    name: 'Painting & Waterproofing',
+    nameHi: 'पेंटिंग व वाटरप्रूफिंग',
+    icon: 'Paintbrush',
+    description: 'Wall touch-ups, dampness treatment, emulsion painting, texture paint.',
+    descriptionHi: 'सीलन इलाज, दीवार पुताई, वॉल पुट्टी और प्राइमर का काम।',
+    basePrice: 499,
+    turnaroundTime: 'Same day inspection',
+    unit: 'per visit / estimate'
+  }
+];
+
+export const initialWorkers: Worker[] = [
+  {
+    id: 'work-1',
+    userId: 'user-work-1',
+    name: 'Ramesh Verma',
+    phone: '+91 98391 23456',
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
+    cooperativeId: 'coop-knp-1',
+    cooperativeName: 'Kalyanpur Shramik Sahyog Samiti Ltd.',
+    status: 'APPROVED',
+    approvedSkills: ['cat-electrician', 'cat-appliance'],
+    experienceYears: 8,
+    rating: 4.9,
+    completedJobs: 142,
+    isAvailable: true,
+    lat: 26.4984, // Kalyanpur, Kanpur
+    lng: 80.2612,
+    upiId: 'ramesh.verma@upi',
+    bankAccount: 'SBI - A/C No. XXXXXX4920',
+    qrCertificateId: 'CERT-KNP-2026-ELEC-0492',
+    welfareEnrolled: true,
+    address: 'G-14, Sharda Nagar, Kalyanpur, Kanpur',
+    area: 'Kalyanpur',
+    joinedAt: '2026-01-15T09:30:00Z',
+    todayEarnings: 1800,
+    totalEarnings: 84600
+  },
+  {
+    id: 'work-2',
+    userId: 'user-work-2',
+    name: 'Sunita Devi',
+    phone: '+91 98392 34567',
+    avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80',
+    cooperativeId: 'coop-knp-1',
+    cooperativeName: 'Kalyanpur Shramik Sahyog Samiti Ltd.',
+    status: 'APPROVED',
+    approvedSkills: ['cat-cleaner'],
+    experienceYears: 5,
+    rating: 4.8,
+    completedJobs: 98,
+    isAvailable: true,
+    lat: 26.4950,
+    lng: 80.2580,
+    upiId: 'sunita.devi@postbank',
+    bankAccount: 'Bank of Baroda - A/C No. XXXXXX8104',
+    qrCertificateId: 'CERT-KNP-2026-CLEN-0118',
+    welfareEnrolled: true,
+    address: 'Near Rama Dental College, Kalyanpur, Kanpur',
+    area: 'Kalyanpur',
+    joinedAt: '2026-02-01T11:00:00Z',
+    todayEarnings: 1260,
+    totalEarnings: 52400
+  },
+  {
+    id: 'work-3',
+    userId: 'user-work-3',
+    name: 'Manoj Kumar',
+    phone: '+91 98393 45678',
+    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80',
+    cooperativeId: 'coop-knp-2',
+    cooperativeName: 'Swaroop Nagar & Civil Lines Karigar Society',
+    status: 'APPROVED',
+    approvedSkills: ['cat-plumber'],
+    experienceYears: 11,
+    rating: 4.95,
+    completedJobs: 215,
+    isAvailable: true,
+    lat: 26.4780, // Swaroop Nagar, Kanpur
+    lng: 80.3150,
+    upiId: 'manoj.kumar@okaxis',
+    bankAccount: 'Punjab National Bank - A/C No. XXXXXX3219',
+    qrCertificateId: 'CERT-KNP-2026-PLUM-0831',
+    welfareEnrolled: true,
+    address: '112/45, Swaroop Nagar, Kanpur',
+    area: 'Swaroop Nagar',
+    joinedAt: '2026-02-10T14:20:00Z',
+    todayEarnings: 2250,
+    totalEarnings: 112500
+  },
+  {
+    id: 'work-4',
+    userId: 'user-work-4',
+    name: 'Deepak Nishad',
+    phone: '+91 98394 11223',
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+    cooperativeId: 'coop-knp-1',
+    cooperativeName: 'Kalyanpur Shramik Sahyog Samiti Ltd.',
+    status: 'UNDER_REVIEW', // Pending secretary approval in queue!
+    approvedSkills: ['cat-carpenter'],
+    experienceYears: 6,
+    rating: 0,
+    completedJobs: 0,
+    isAvailable: false,
+    lat: 26.5020,
+    lng: 80.2540,
+    upiId: 'deepak.carpenter@paytm',
+    bankAccount: 'Union Bank - A/C No. XXXXXX9942',
+    qrCertificateId: 'CERT-PENDING-004',
+    welfareEnrolled: false,
+    address: 'Shivli Road, Kalyanpur, Kanpur',
+    area: 'Kalyanpur',
+    joinedAt: '2026-03-25T16:00:00Z',
+    todayEarnings: 0,
+    totalEarnings: 0
+  },
+  {
+    id: 'work-5',
+    userId: 'user-work-5',
+    name: 'Suresh Chandra Sharma',
+    phone: '+91 98395 22334',
+    avatar: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=150&auto=format&fit=crop&q=80',
+    cooperativeId: 'coop-knp-3',
+    cooperativeName: 'Kidwai Nagar & Barra Mahila & Shram Sahyog',
+    status: 'APPROVED',
+    approvedSkills: ['cat-painter'],
+    experienceYears: 9,
+    rating: 4.7,
+    completedJobs: 73,
+    isAvailable: true,
+    lat: 26.4350, // Kidwai Nagar, Kanpur
+    lng: 80.3320,
+    upiId: 'suresh.paint@sbi',
+    bankAccount: 'Canara Bank - A/C No. XXXXXX1128',
+    qrCertificateId: 'CERT-KNP-2026-PNT-0349',
+    welfareEnrolled: true,
+    address: 'Block E, Kidwai Nagar, Kanpur',
+    area: 'Kidwai Nagar',
+    joinedAt: '2026-01-20T10:00:00Z',
+    todayEarnings: 900,
+    totalEarnings: 48900
+  }
+];
+
+export const initialCertificates: SkillCertificate[] = [
+  {
+    id: 'cert-1',
+    certificateNumber: 'CERT-KNP-2026-ELEC-0492',
+    workerId: 'work-1',
+    workerName: 'Ramesh Verma',
+    cooperativeId: 'coop-knp-1',
+    cooperativeName: 'Kalyanpur Shramik Sahyog Samiti Ltd.',
+    skills: ['Domestic & Industrial Wiring', 'MCB Tripping & Earthing', 'Appliance Diagnostics'],
+    issueDate: '2026-01-20',
+    expiryDate: '2027-01-19',
+    status: 'ACTIVE',
+    signatureHash: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+    verificationUrl: '/verify/CERT-KNP-2026-ELEC-0492',
+    authorizedBy: 'Alok Nath Mishra (Secretary, Kalyanpur Cooperative)'
+  },
+  {
+    id: 'cert-2',
+    certificateNumber: 'CERT-KNP-2026-CLEN-0118',
+    workerId: 'work-2',
+    workerName: 'Sunita Devi',
+    cooperativeId: 'coop-knp-1',
+    cooperativeName: 'Kalyanpur Shramik Sahyog Samiti Ltd.',
+    skills: ['Deep Sanitization Protocols', 'Chemical Safety & Descaling', 'High-Traffic Hygiene'],
+    issueDate: '2026-02-05',
+    expiryDate: '2027-02-04',
+    status: 'ACTIVE',
+    signatureHash: '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8',
+    verificationUrl: '/verify/CERT-KNP-2026-CLEN-0118',
+    authorizedBy: 'Alok Nath Mishra (Secretary, Kalyanpur Cooperative)'
+  },
+  {
+    id: 'cert-3',
+    certificateNumber: 'CERT-KNP-2026-PLUM-0831',
+    workerId: 'work-3',
+    workerName: 'Manoj Kumar',
+    cooperativeId: 'coop-knp-2',
+    cooperativeName: 'Swaroop Nagar & Civil Lines Karigar Society',
+    skills: ['Pressurized Pipe Leakage Repair', 'CPVC & GI Fitting', 'Motor & Overhead Tank Setup'],
+    issueDate: '2026-02-12',
+    expiryDate: '2027-02-11',
+    status: 'ACTIVE',
+    signatureHash: '4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a',
+    verificationUrl: '/verify/CERT-KNP-2026-PLUM-0831',
+    authorizedBy: 'Rajesh Saxena (Secretary, Swaroop Nagar Society)'
+  },
+  {
+    id: 'cert-5',
+    certificateNumber: 'CERT-KNP-2026-PNT-0349',
+    workerId: 'work-5',
+    workerName: 'Suresh Chandra Sharma',
+    cooperativeId: 'coop-knp-3',
+    cooperativeName: 'Kidwai Nagar & Barra Mahila & Shram Sahyog',
+    skills: ['Anti-Damp Waterproofing', 'Emulsion Painting', 'Wood Polishing'],
+    issueDate: '2026-01-25',
+    expiryDate: '2027-01-24',
+    status: 'ACTIVE',
+    signatureHash: 'ef2d127de37b942baad06145e54b0c619a1f22327b2ebbcfbec78f5564afe39d',
+    verificationUrl: '/verify/CERT-KNP-2026-PNT-0349',
+    authorizedBy: 'Kusum Lata Sahu (Secretary, Kidwai Nagar Society)'
+  }
+];
+
+export const initialBookings: Booking[] = [
+  {
+    id: 'bk-101',
+    bookingCode: 'SHY-26-8812',
+    customerId: 'user-cust-1',
+    customerName: 'Priya Sharma',
+    customerPhone: '+91 98390 12345',
+    address: 'Flat 402, Ganga Heights, Kalyanpur, Kanpur',
+    area: 'Kalyanpur',
+    lat: 26.4960,
+    lng: 80.2600,
+    serviceCategoryId: 'cat-electrician',
+    serviceName: 'Electrician Services',
+    description: 'Main tripping issue in MCB box whenever geyser is turned on. Need immediate diagnosis.',
+    scheduledTime: 'Today, Immediate (Priority)',
+    isEmergency: false,
+    status: 'IN_PROGRESS',
+    assignedWorkerId: 'work-1',
+    workerName: 'Ramesh Verma',
+    workerPhone: '+91 98391 23456',
+    workerAvatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
+    otpCode: '4829',
+    totalAmount: 500,
+    workerShare: 450, // 90%
+    platformFee: 50,  // 10%
+    welfareFee: 10,   // 2%
+    paymentMethod: 'UPI',
+    paymentStatus: 'PENDING',
+    createdAt: '2026-03-30T07:45:00Z',
+    allocationDetails: {
+      score: 94.6,
+      explanation: 'Selected via Fair Allocation Engine: 100% skill match (Electrician), 0.8 km distance, top fairness rotation index.'
+    }
+  },
+  {
+    id: 'bk-102',
+    bookingCode: 'SHY-26-8790',
+    customerId: 'user-cust-1',
+    customerName: 'Priya Sharma',
+    customerPhone: '+91 98390 12345',
+    address: 'Flat 402, Ganga Heights, Kalyanpur, Kanpur',
+    area: 'Kalyanpur',
+    lat: 26.4960,
+    lng: 80.2600,
+    serviceCategoryId: 'cat-cleaner',
+    serviceName: 'Deep Cleaning & Sanitization',
+    description: 'Festival deep cleaning for 3BHK flat including kitchen and 2 bathrooms.',
+    scheduledTime: '2026-03-28 10:00 AM',
+    isEmergency: false,
+    status: 'COMPLETED',
+    assignedWorkerId: 'work-2',
+    workerName: 'Sunita Devi',
+    workerPhone: '+91 98392 34567',
+    workerAvatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80',
+    otpCode: '9134',
+    totalAmount: 1400,
+    workerShare: 1260, // 90%
+    platformFee: 140,  // 10%
+    welfareFee: 28,    // 2%
+    paymentMethod: 'UPI',
+    paymentStatus: 'PAID',
+    transactionId: 'TXN-UPI-9921448',
+    createdAt: '2026-03-28T09:00:00Z',
+    completedAt: '2026-03-28T13:30:00Z',
+    rating: 5,
+    reviewComment: 'Sunita ji did an outstanding and hygienic job! Very polite and professional.'
+  },
+  {
+    id: 'bk-103',
+    bookingCode: 'SHY-26-8721',
+    customerId: 'user-cust-2',
+    customerName: 'Anil Kapoor',
+    customerPhone: '+91 98398 76543',
+    address: '14/110, Civil Lines, Kanpur',
+    area: 'Civil Lines',
+    lat: 26.4710,
+    lng: 80.3410,
+    serviceCategoryId: 'cat-plumber',
+    serviceName: 'Plumbing & Pipe Repair',
+    description: 'Kitchen sink drain pipe burst causing severe water leakage on floor.',
+    scheduledTime: 'Immediate SOS',
+    isEmergency: true,
+    status: 'COMPLETED',
+    assignedWorkerId: 'work-3',
+    workerName: 'Manoj Kumar',
+    workerPhone: '+91 98393 45678',
+    workerAvatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80',
+    otpCode: '3157',
+    totalAmount: 1000,
+    workerShare: 900, // 90%
+    platformFee: 100, // 10%
+    welfareFee: 20,   // 2%
+    paymentMethod: 'GATEWAY_RAZORPAY',
+    paymentStatus: 'PAID',
+    transactionId: 'pay_KnpRazor_88192',
+    createdAt: '2026-03-27T14:10:00Z',
+    completedAt: '2026-03-27T15:20:00Z',
+    rating: 5,
+    reviewComment: 'Emergency SOS responded in under 7 minutes. Manoj arrived quickly and fixed the pipe.'
+  }
+];
+
+export const initialPayments: PaymentTransaction[] = [
+  {
+    id: 'pay-txn-1',
+    bookingId: 'bk-102',
+    bookingCode: 'SHY-26-8790',
+    transactionId: 'TXN-UPI-9921448',
+    amount: 1400,
+    workerShare: 1260,
+    platformFee: 140,
+    welfareFee: 28,
+    paymentMethod: 'UPI',
+    status: 'CAPTURED',
+    signatureVerified: true,
+    payerName: 'Priya Sharma',
+    workerName: 'Sunita Devi',
+    createdAt: '2026-03-28T13:32:00Z'
+  },
+  {
+    id: 'pay-txn-2',
+    bookingId: 'bk-103',
+    bookingCode: 'SHY-26-8721',
+    transactionId: 'pay_KnpRazor_88192',
+    amount: 1000,
+    workerShare: 900,
+    platformFee: 100,
+    welfareFee: 20,
+    paymentMethod: 'GATEWAY_RAZORPAY',
+    status: 'CAPTURED',
+    signatureVerified: true,
+    payerName: 'Anil Kapoor',
+    workerName: 'Manoj Kumar',
+    createdAt: '2026-03-27T15:25:00Z'
+  }
+];
+
+export const initialInvoices: Invoice[] = [
+  {
+    id: 'inv-101',
+    invoiceNumber: 'INV/SAHYOG/2026/03/0891',
+    bookingId: 'bk-102',
+    bookingCode: 'SHY-26-8790',
+    customerName: 'Priya Sharma',
+    customerPhone: '+91 98390 12345',
+    customerAddress: 'Flat 402, Ganga Heights, Kalyanpur, Kanpur',
+    workerName: 'Sunita Devi',
+    workerCertificateId: 'CERT-KNP-2026-CLEN-0118',
+    cooperativeName: 'Kalyanpur Shramik Sahyog Samiti Ltd.',
+    cooperativeGst: '09AAACK1234F1Z8',
+    serviceName: 'Deep Cleaning & Sanitization (3BHK Special)',
+    baseAmount: 1400,
+    gstAmount: 0, // Cooperative exemption under Sec 12AA / threshold
+    totalAmount: 1400,
+    workerShare: 1260, // 90%
+    platformCommission: 112, // 8%
+    welfareContribution: 28, // 2%
+    paymentStatus: 'PAID',
+    paymentMethod: 'UPI (Ref: TXN-UPI-9921448)',
+    issuedAt: '2026-03-28T13:35:00Z'
+  },
+  {
+    id: 'inv-102',
+    invoiceNumber: 'INV/SAHYOG/2026/03/0842',
+    bookingId: 'bk-103',
+    bookingCode: 'SHY-26-8721',
+    customerName: 'Anil Kapoor',
+    customerPhone: '+91 98398 76543',
+    customerAddress: '14/110, Civil Lines, Kanpur',
+    workerName: 'Manoj Kumar',
+    workerCertificateId: 'CERT-KNP-2026-PLUM-0831',
+    cooperativeName: 'Swaroop Nagar & Civil Lines Karigar Society',
+    cooperativeGst: '09AABCS5678G2Z1',
+    serviceName: 'Emergency Pipe Repair & Fitting',
+    baseAmount: 1000,
+    gstAmount: 0,
+    totalAmount: 1000,
+    workerShare: 900, // 90%
+    platformCommission: 80, // 8%
+    welfareContribution: 20, // 2%
+    paymentStatus: 'PAID',
+    paymentMethod: 'Razorpay Gateway (pay_KnpRazor_88192)',
+    issuedAt: '2026-03-27T15:30:00Z'
+  }
+];
+
+export const initialWelfare: WorkerWelfare[] = [
+  {
+    workerId: 'work-1',
+    workerName: 'Ramesh Verma',
+    cooperativeName: 'Kalyanpur Shramik Sahyog Samiti Ltd.',
+    policyNumber: 'PMSBY-KNP-98402-2026',
+    insuranceScheme: 'PM Suraksha Bima Yojana + UP Gig Worker Group Accidental Cover',
+    coverageAmount: 200000,
+    annualPremium: 450,
+    subsidyPaid: 450,
+    renewalDate: '2027-01-31',
+    status: 'ACTIVE',
+    claims: [],
+    totalContributionsFromGigs: 1692
+  },
+  {
+    workerId: 'work-2',
+    workerName: 'Sunita Devi',
+    cooperativeName: 'Kalyanpur Shramik Sahyog Samiti Ltd.',
+    policyNumber: 'PMSBY-KNP-98444-2026',
+    insuranceScheme: 'PM Suraksha Bima Yojana + Maternity & Health Welfare Aid',
+    coverageAmount: 200000,
+    annualPremium: 450,
+    subsidyPaid: 450,
+    renewalDate: '2027-02-15',
+    status: 'ACTIVE',
+    claims: [],
+    totalContributionsFromGigs: 1048
+  },
+  {
+    workerId: 'work-3',
+    workerName: 'Manoj Kumar',
+    cooperativeName: 'Swaroop Nagar & Civil Lines Karigar Society',
+    policyNumber: 'PMSBY-KNP-87102-2026',
+    insuranceScheme: 'PM Suraksha Bima Yojana + Critical Tool Disability Cover',
+    coverageAmount: 200000,
+    annualPremium: 450,
+    subsidyPaid: 450,
+    renewalDate: '2027-02-28',
+    status: 'ACTIVE',
+    claims: [
+      {
+        id: 'clm-01',
+        type: 'Minor Accidental Hand Sprain Medical Reimbursement',
+        amount: 3500,
+        status: 'SETTLED',
+        filedDate: '2026-02-18'
+      }
+    ],
+    totalContributionsFromGigs: 2250
+  }
+];
+
+export const initialDemandForecasts: DemandForecast[] = [
+  {
+    id: 'fc-1',
+    areaName: 'Kalyanpur (Ward 24)',
+    wardNumber: 'Ward 24',
+    serviceCategory: 'Electrician Services',
+    currentWeeklyDemand: 185,
+    forecastedWeeklyDemand: 245,
+    growthPercentage: 32.4,
+    workerSupplyCount: 14,
+    shortageWarning: true,
+    shortageWorkersNeeded: 5,
+    confidenceScore: 94.2,
+    modelVersion: 'Prophet-XGB-Hybrid-v2.6'
+  },
+  {
+    id: 'fc-2',
+    areaName: 'Swaroop Nagar & Kakadeo (Ward 18)',
+    wardNumber: 'Ward 18',
+    serviceCategory: 'Home Appliance Repair',
+    currentWeeklyDemand: 140,
+    forecastedWeeklyDemand: 198,
+    growthPercentage: 41.4,
+    workerSupplyCount: 11,
+    shortageWarning: true,
+    shortageWorkersNeeded: 4,
+    confidenceScore: 92.8,
+    modelVersion: 'Prophet-XGB-Hybrid-v2.6'
+  },
+  {
+    id: 'fc-3',
+    areaName: 'Civil Lines (Ward 12)',
+    wardNumber: 'Ward 12',
+    serviceCategory: 'Plumbing & Pipe Repair',
+    currentWeeklyDemand: 120,
+    forecastedWeeklyDemand: 132,
+    growthPercentage: 10.0,
+    workerSupplyCount: 12,
+    shortageWarning: false,
+    shortageWorkersNeeded: 0,
+    confidenceScore: 95.1,
+    modelVersion: 'Prophet-XGB-Hybrid-v2.6'
+  },
+  {
+    id: 'fc-4',
+    areaName: 'Kidwai Nagar & Barra (Ward 35)',
+    wardNumber: 'Ward 35',
+    serviceCategory: 'Deep Cleaning & Sanitization',
+    currentWeeklyDemand: 95,
+    forecastedWeeklyDemand: 175,
+    growthPercentage: 84.2,
+    workerSupplyCount: 8,
+    shortageWarning: true,
+    shortageWorkersNeeded: 6,
+    confidenceScore: 91.5,
+    modelVersion: 'Prophet-XGB-Hybrid-v2.6'
+  }
+];
+
+export const initialComplaints: Complaint[] = [
+  {
+    id: 'cmp-1',
+    complaintCode: 'CMP-KNP-2026-0041',
+    bookingId: 'bk-old-88',
+    customerId: 'user-cust-3',
+    customerName: 'Vikash Shukla',
+    workerId: 'work-5',
+    workerName: 'Suresh Chandra Sharma',
+    subject: 'Minor paint drops on window glass left uncleaned',
+    description: 'Work was satisfactory but small primer stains were left on the window sill.',
+    status: 'RESOLVED',
+    resolutionNote: 'Worker revisited next morning and polished the window clean. Customer expressed gratitude.',
+    createdAt: '2026-03-15T11:00:00Z',
+    resolvedAt: '2026-03-16T14:30:00Z'
+  }
+];
+
+export const initialAuditLogs: AuditLog[] = [
+  {
+    id: 'aud-1',
+    userId: 'user-sec-1',
+    userName: 'Alok Nath Mishra',
+    role: 'secretary',
+    action: 'WORKER_CERTIFICATE_ISSUED',
+    entityType: 'SkillCertificate',
+    entityId: 'CERT-KNP-2026-ELEC-0492',
+    details: 'Issued active QR Skill Certificate to Ramesh Verma after Aadhaar, Police Verification and skill evaluation.',
+    timestamp: '2026-01-20T11:45:00Z'
+  },
+  {
+    id: 'aud-2',
+    userId: 'user-admin-1',
+    userName: 'Vikramaditya Rao',
+    role: 'admin',
+    action: 'POLICY_COMMISSION_SET',
+    entityType: 'SystemSettings',
+    entityId: 'fee-split-rule',
+    details: 'Set platform commission at 10% (8% cooperative ops, 2% worker welfare pool). 90% direct to worker.',
+    timestamp: '2026-01-01T00:00:00Z'
+  }
+];
+
+export const initialSystemSettings: SystemSettings = {
+  platformFeePercent: 10,
+  workerWelfarePercent: 2,
+  cooperativeAdminPercent: 8,
+  razorpaySandboxKey: 'rzp_test_SAHYOG_KANPUR_2026',
+  emergencySearchRadiusKm: 15,
+  autoAllocationTimeoutSec: 60,
+  bhashiniVoiceEnabled: true,
+  whatsappNotificationsActive: true
+};
+
+export const initialNotifications: AppNotification[] = [
+  {
+    id: 'notif-1',
+    recipientUserId: 'user-work-1',
+    type: 'BOOKING',
+    channel: 'IN_APP',
+    title: 'New Fair Job Assigned: MCB Repair',
+    message: 'You have been assigned booking SHY-26-8812 in Kalyanpur. Tap to view customer address & verify OTP.',
+    read: false,
+    timestamp: '2026-03-30T07:45:10Z',
+    actionUrl: '/worker'
+  },
+  {
+    id: 'notif-2',
+    recipientUserId: 'user-cust-1',
+    type: 'BOOKING',
+    channel: 'WHATSAPP',
+    title: 'SAHYOG: Ramesh Verma is on the way!',
+    message: 'Your verified electrician Ramesh Verma is arriving in ~12 mins. Share OTP 4829 when he arrives.',
+    read: true,
+    timestamp: '2026-03-30T07:46:00Z',
+    actionUrl: '/customer'
+  }
+];

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <rect width="512" height="512" rx="128" fill="#087F5B"/>
+  <!-- Two stylized hands holding together representing Sahyog (Cooperation) -->
+  <circle cx="256" cy="160" r="48" fill="#F4B942" />
+  <path d="M140 380 C 140 280, 200 240, 256 240 C 312 240, 372 280, 372 380 L 140 380 Z" fill="#FFFFFF" fill-opacity="0.95"/>
+  <path d="M190 280 L 256 340 L 322 280" stroke="#087F5B" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="256" cy="340" r="16" fill="#F4B942"/>
+  <path d="M210 420 L 302 420" stroke="#F4B942" stroke-width="14" stroke-linecap="round"/>
+</svg>

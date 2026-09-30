@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  sahyog-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - DATABASE_PATH=/app/data/database.json
+      - RAZORPAY_SANDBOX_KEY=rzp_test_SAHYOG_KANPUR_2026
+    volumes:
+      - sahyog_data:/app/data
+    restart: always
+
+  sahyog-ai-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.ai
+    ports:
+      - "8000:8000"
+    environment:
+      - MODEL_ENV=production
+      - DISTRICT=Kanpur_Nagar
+    restart: always
+
+volumes:
+  sahyog_data:

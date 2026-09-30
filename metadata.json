@@ -1,0 +1,6 @@
+{
+  "name": "SAHYOG - Cooperative Gig Services Platform",
+  "description": "Cooperative-owned marketplace connecting households with verified local workers with 90% fair pay, QR certificates, and emergency SOS in Kanpur.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
