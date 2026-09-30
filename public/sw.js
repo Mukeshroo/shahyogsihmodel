@@ -1,15 +1,17 @@
-const CACHE_NAME = 'sahyog-cache-v1';
-const ASSETS_TO_CACHE = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/sahyog-icon.svg'
-];
+const CACHE_NAME = 'sahyog-cache-v2';
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(ASSETS_TO_CACHE);
+    caches.open(CACHE_NAME).then(async (cache) => {
+      // Safely attempt caching without aborting on 404
+      const urls = ['./', './index.html', './manifest.json', './sahyog-icon.svg'];
+      for (const url of urls) {
+        try {
+          await cache.add(url);
+        } catch (e) {
+          // Ignore 404s on subpaths
+        }
+      }
     })
   );
   self.skipWaiting();

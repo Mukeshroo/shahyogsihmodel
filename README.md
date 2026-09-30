@@ -102,6 +102,15 @@ npm test
 
 ## 🚢 Deployment & Docker
 
+### GitHub Pages Deployment (Instant 1-Click)
+The repository is fully configured for GitHub Pages with relative assets (`base: './'`), SPA 404 routing (`public/404.html`), resilient service worker, and automatic client DB fallback:
+1. Push this repository to GitHub (`main` or `master` branch).
+2. Go to your repository **Settings** -> **Pages**.
+3. Under **Build and deployment**:
+   - Select **GitHub Actions** (the included `.github/workflows/deploy.yml` will automatically build and deploy `dist/` on push).
+   - Alternatively, under **Source**, select **Deploy from a branch** -> branch `gh-pages` or `main /dist`.
+4. Your site will immediately open at `https://<username>.github.io/<repo-name>/` with full functionality across all 5 roles, booking, emergency SOS, and QR verification!
+
 ### Docker Compose
 ```bash
 docker-compose up --build

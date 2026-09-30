@@ -1,17 +1,16 @@
 {
-  "id": "/",
   "name": "SAHYOG Cooperative Services",
   "short_name": "SAHYOG",
   "description": "Cooperative gig services platform connecting households with verified local workers with fair pay and emergency SOS in Kanpur.",
-  "start_url": "/",
-  "scope": "/",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "orientation": "portrait-primary",
   "background_color": "#F7F9FC",
   "theme_color": "#087F5B",
   "icons": [
     {
-      "src": "/sahyog-icon.svg",
+      "src": "./sahyog-icon.svg",
       "sizes": "192x192 512x512",
       "type": "image/svg+xml",
       "purpose": "any"
